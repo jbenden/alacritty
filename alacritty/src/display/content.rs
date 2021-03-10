@@ -5,6 +5,7 @@ use std::ops::{Deref, DerefMut, RangeInclusive};
 
 use alacritty_terminal::ansi::{Color, CursorShape, NamedColor};
 use alacritty_terminal::event::EventListener;
+use alacritty_terminal::graphics::GraphicCell;
 use alacritty_terminal::grid::{Dimensions, Indexed};
 use alacritty_terminal::index::{Column, Direction, Line, Point};
 use alacritty_terminal::term::cell::{Cell, Flags};
@@ -187,6 +188,7 @@ pub struct RenderableCell {
     pub character: char,
     pub zerowidth: Option<Vec<char>>,
     pub point: Point<usize>,
+    pub graphic: Option<GraphicCell>,
     pub fg: Rgb,
     pub bg: Rgb,
     pub bg_alpha: f32,
@@ -257,6 +259,7 @@ impl RenderableCell {
 
         RenderableCell {
             zerowidth: cell.zerowidth().map(|zerowidth| zerowidth.to_vec()),
+            graphic: cell.graphic().cloned(),
             flags: cell.flags,
             character,
             bg_alpha,
