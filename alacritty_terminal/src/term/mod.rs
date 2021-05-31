@@ -1802,7 +1802,7 @@ impl<T: EventListener> Handler for Term<T> {
         let (ps, pv) = if pa == 1 || pa == 4 {
             match pi {
                 1 => (0, &[sixel::MAX_COLOR_REGISTERS][..]),
-                2 => (0, &[MAX_GRAPHIC_DIMENSIONS.0, MAX_GRAPHIC_DIMENSIONS.1][..]),
+                2 => (0, &MAX_GRAPHIC_DIMENSIONS[..]),
                 _ => (1, &[][..]), // Report error in Pi
             }
         } else {
@@ -1831,7 +1831,7 @@ impl<T: EventListener> Handler for Term<T> {
             }
         }
 
-        if graphic.width > MAX_GRAPHIC_DIMENSIONS.0 || graphic.height > MAX_GRAPHIC_DIMENSIONS.1 {
+        if graphic.width > MAX_GRAPHIC_DIMENSIONS[0] || graphic.height > MAX_GRAPHIC_DIMENSIONS[1] {
             return;
         }
 
