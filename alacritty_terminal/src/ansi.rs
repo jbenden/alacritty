@@ -463,7 +463,7 @@ pub trait Handler {
     fn text_area_size_chars(&mut self) {}
 
     /// Report a graphics attribute.
-    fn graphics_attribute<W: io::Write>(&mut self, _: &mut W, _: u16, _: u16) {}
+    fn graphics_attribute(&mut self, _: u16, _: u16) {}
 
     /// Create a parser for Sixel data.
     fn start_sixel_graphic(&mut self, _params: &Params) -> Option<Box<sixel::Parser>> {
@@ -546,7 +546,7 @@ pub enum Mode {
     /// ?25
     ShowCursor = 25,
     /// ?80
-    SixelScrolling = 80,
+    SixelDisplay = 80,
     /// ?1000
     ReportMouseClicks = 1000,
     /// ?1002
@@ -590,7 +590,7 @@ impl Mode {
                 7 => Mode::LineWrap,
                 12 => Mode::BlinkingCursor,
                 25 => Mode::ShowCursor,
-                80 => Mode::SixelScrolling,
+                80 => Mode::SixelDisplay,
                 1000 => Mode::ReportMouseClicks,
                 1002 => Mode::ReportCellMouseMotion,
                 1003 => Mode::ReportAllMouseMotion,
@@ -1290,7 +1290,7 @@ where
                 handler.set_scrolling_region(top, bottom);
             },
             ('S', []) => handler.scroll_up(next_param_or(1) as usize),
-            ('S', [b'?']) => handler.graphics_attribute(writer, next_param_or(0), next_param_or(0)),
+            ('S', [b'?']) => handler.graphics_attribute(next_param_or(0), next_param_or(0)),
             ('s', []) => handler.save_cursor_position(),
             ('T', []) => handler.scroll_down(next_param_or(1) as usize),
             ('t', []) => match next_param_or(1) as usize {
