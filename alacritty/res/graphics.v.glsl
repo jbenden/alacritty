@@ -33,6 +33,9 @@ layout(location = 7) in float offsetY;
 // Height in pixels of a single cell when the graphic was added.
 layout(location = 8) in float baseCellHeight;
 
+// Padding of the terminal, in the Y direction.
+layout(location = 9) in float paddingY;
+
 // -------
 // OUTPUTS
 
@@ -59,8 +62,9 @@ void main() {
     float scale = cellDimensions.y / baseCellHeight;
     float x = (column * cellDimensions.x - offsetX * scale) / (viewDimensions.x / 2) - 1;
     float y = -(line * cellDimensions.y - offsetY * scale) / (viewDimensions.y / 2) + 1;
+	float oy = paddingY * 2.0;
 
-    vec4 position = vec4(x, y, 0, 1);
+    vec4 position = vec4(x, y > oy ? y - oy : y, 0, 1);
     vec2 coords = vec2(0, 0);
 
     if(IS_RIGHT_SIDE) {
