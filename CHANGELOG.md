@@ -26,6 +26,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Repeated permission prompts on M1 macs
 - Colors being slightly off when using `colors.transparent_background_colors`
 
+### Packaging
+
+- Minimum Rust version has been bumped to 1.56.0
+
 ## 0.10.0
 
 ### Packaging
